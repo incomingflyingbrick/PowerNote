@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.view.MotionEvent
 import android.view.View
 import com.example.powernote.FingerPath
+
 
 class PaintView:View {
 
@@ -24,7 +26,7 @@ class PaintView:View {
     private val TOUCH_TOLERANCE = 4f
     private var mX = 0f
     private var mY = 0f
-    private val mPath: Path? = null
+    private var mPath: Path? = null
     private val mPaint: Paint = Paint()
     private val paths = mutableListOf<FingerPath>()
     private var currentColor = 0
@@ -103,6 +105,56 @@ class PaintView:View {
             it.drawBitmap(mBitmap,0f,0f,mBitmapPaint)
             it.restore()
         }
+    }
+
+    private fun touchStart(x: Float, y: Float) {
+
+        mPath = Path()
+        mPath?.let {
+            val fp = FingerPath(currentColor, emboss, blur, strokeWidth.toFloat(),it)
+            paths.add(fp)
+            it.reset()
+            it.moveTo(x, y)
+            mX = x
+            mY = y
+        }
+
+    }
+
+    private fun touchMove(x: Float, y: Float) {
+        val dx = Math.abs(x - mX)
+        val dy = Math.abs(y - mY)
+        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+            mPath!!.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2)
+            mX = x
+            mY = y
+        }
+    }
+
+    private fun touchUp() {
+        mPath?.let {
+            it.lineTo(mX,mY)
+        }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val x = event.x
+        val y = event.y
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                touchStart(x, y)
+                invalidate()
+            }
+            MotionEvent.ACTION_MOVE -> {
+                touchMove(x, y)
+                invalidate()
+            }
+            MotionEvent.ACTION_UP -> {
+                touchUp()
+                invalidate()
+            }
+        }
+        return true
     }
 
 }
