@@ -51,7 +51,6 @@ class PaintView:View {
         mPaint.strokeCap = Paint.Cap.ROUND
         mPaint.xfermode = null
         mPaint.alpha = 0xff
-        //mEmboss = EmbossMaskFilter(floatArrayOf(1f, 1f, 1f), 0.4f, 6, 3.5f)
         mBlur = BlurMaskFilter(5f, BlurMaskFilter.Blur.NORMAL)
     }
 
