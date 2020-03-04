@@ -3,28 +3,19 @@ package com.example.powernote.view
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.view.View
 import com.example.powernote.FingerPath
 
-
 class PaintView:View {
 
-    constructor(context: Context?) : super(context)
+    constructor(context: Context?) : super(context){
+        initView()
+    }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs){
+        initView()
+    }
 
 
     var BRUSH_SIZE = 20
@@ -35,16 +26,17 @@ class PaintView:View {
     private var mY = 0f
     private val mPath: Path? = null
     private val mPaint: Paint = Paint()
-    private val paths: ArrayList<FingerPath> = ArrayList()
-    private val currentColor = 0
-    private val backgroundColor = DEFAULT_BG_COLOR
-    private val strokeWidth = 0
-    private val emboss = false
-    private val blur = false
-    private val mEmboss: MaskFilter? = null
-    private val mBlur: MaskFilter? = null
-    private val mBitmap: Bitmap? = null
-    private val mCanvas: Canvas? = null
+    private val paths = mutableListOf<FingerPath>()
+    private var currentColor = 0
+
+    private var mBackGroundColor = Color.WHITE
+
+    private var strokeWidth = 0
+    private var emboss = false
+    private var blur = false
+    private lateinit var mBlur: MaskFilter
+    private lateinit var mBitmap: Bitmap
+    private lateinit var mCanvas: Canvas
     private val mBitmapPaint: Paint = Paint(Paint.DITHER_FLAG)
 
 
@@ -57,6 +49,60 @@ class PaintView:View {
         mPaint.strokeCap = Paint.Cap.ROUND
         mPaint.xfermode = null
         mPaint.alpha = 0xff
+        //mEmboss = EmbossMaskFilter(floatArrayOf(1f, 1f, 1f), 0.4f, 6, 3.5f)
+        mBlur = BlurMaskFilter(5f, BlurMaskFilter.Blur.NORMAL)
+    }
+
+    fun init(metrics: DisplayMetrics){
+        val height = metrics.heightPixels
+        val width = metrics.widthPixels
+
+        mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        mCanvas = Canvas(mBitmap)
+
+        currentColor = DEFAULT_COLOR
+        strokeWidth = BRUSH_SIZE
+    }
+
+    fun normal() {
+        emboss = false
+        blur = false
+    }
+
+    fun emboss() {
+        emboss = true
+        blur = false
+    }
+
+    fun blur() {
+        emboss = false
+        blur = true
+    }
+
+    fun clear() {
+        mBackGroundColor = DEFAULT_BG_COLOR
+        paths.clear()
+        normal()
+        invalidate()
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        canvas?.let {
+            it.save()
+            mCanvas.drawColor(mBackGroundColor)
+            for(item in paths){
+                mPaint.color = item.color
+                mPaint.strokeWidth = item.strokeWidth
+                mPaint.maskFilter = null
+                if(item.blur){
+                    mPaint.maskFilter = mBlur
+                }
+                mCanvas.drawPath(item.path,mPaint)
+            }
+            it.drawBitmap(mBitmap,0f,0f,mBitmapPaint)
+            it.restore()
+        }
     }
 
 }

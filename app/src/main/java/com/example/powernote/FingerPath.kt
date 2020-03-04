@@ -6,6 +6,6 @@ data class FingerPath(
     var color: Int,
     var emboss: Boolean,
     var blur: Boolean,
-    var strokeWidth: Int,
+    var strokeWidth: Float,
     var path: Path
 )

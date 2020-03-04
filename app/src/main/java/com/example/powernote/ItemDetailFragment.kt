@@ -1,5 +1,6 @@
 package com.example.powernote
 
+import android.graphics.Color
 import android.graphics.Path
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -40,7 +41,7 @@ class ItemDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.item_detail, container, false)
-        val fingerPath = FingerPath(1,true,true,20, Path())
+        val fingerPath = FingerPath(Color.RED,emboss = false,blur = true,strokeWidth = 10f, path = Path())
 
         // Show the dummy content as text in a TextView.
         item?.let {
