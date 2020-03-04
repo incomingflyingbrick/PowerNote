@@ -65,13 +65,17 @@ class ItemListActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_fine -> {
                 val frag = supportFragmentManager.findFragmentByTag(TAG_VIEW) as ItemDetailFragment
-
+                frag.changeSizeFine()
                 return true
             }
             R.id.action_medium -> {
+                val frag = supportFragmentManager.findFragmentByTag(TAG_VIEW) as ItemDetailFragment
+                frag.changeSizeMedium()
                 return true
             }
             R.id.action_bold -> {
+                val frag = supportFragmentManager.findFragmentByTag(TAG_VIEW) as ItemDetailFragment
+                frag.changeSizeBold()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

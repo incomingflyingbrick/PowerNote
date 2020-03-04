@@ -34,15 +34,15 @@ class ItemDetailFragment : Fragment() {
     }
 
     fun changeSizeFine(){
-
+        mPaintView.changeStrokeSize(5f)
     }
 
     fun changeSizeMedium(){
-
+        mPaintView.changeStrokeSize(15f)
     }
 
     fun changeSizeBold(){
-
+        mPaintView.changeStrokeSize(25f)
     }
 
     companion object {

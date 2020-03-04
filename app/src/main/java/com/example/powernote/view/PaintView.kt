@@ -20,9 +20,10 @@ class PaintView:View {
     }
 
 
-    var BRUSH_SIZE = 20
+    var BRUSH_SIZE = 5f
     val DEFAULT_COLOR: Int = Color.RED
     val DEFAULT_BG_COLOR: Int = Color.WHITE
+
     private val TOUCH_TOLERANCE = 4f
     private var mX = 0f
     private var mY = 0f
@@ -33,7 +34,7 @@ class PaintView:View {
 
     private var mBackGroundColor = Color.WHITE
 
-    private var strokeWidth = 0
+    private var strokeWidth = 0f
     private var emboss = false
     private var blur = false
     private lateinit var mBlur: MaskFilter
@@ -87,6 +88,14 @@ class PaintView:View {
         invalidate()
     }
 
+    fun changeStrokeSize(size:Float){
+        strokeWidth = size
+    }
+
+    fun changeColor(color: Color){
+
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
@@ -110,7 +119,7 @@ class PaintView:View {
 
         mPath = Path()
         mPath?.let {
-            val fp = FingerPath(currentColor, emboss, blur, strokeWidth.toFloat(),it)
+            val fp = FingerPath(currentColor, emboss, blur, strokeWidth,it)
             paths.add(fp)
             it.reset()
             it.moveTo(x, y)
