@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.powernote.view.PaintView
 import kotlinx.android.synthetic.main.item_detail.view.*
 
 
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.item_detail.view.*
  */
 class ItemDetailFragment : Fragment() {
 
+    private lateinit var mPaintView:PaintView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,9 +27,22 @@ class ItemDetailFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.item_detail, container, false)
         val metrics = DisplayMetrics()
         activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
-        rootView.paintview.init(metrics)
-        rootView.paintview.blur()
+        mPaintView = rootView.paintview
+        mPaintView.init(metrics)
+        mPaintView.normal()
         return rootView
+    }
+
+    fun changeSizeFine(){
+
+    }
+
+    fun changeSizeMedium(){
+
+    }
+
+    fun changeSizeBold(){
+
     }
 
     companion object {
