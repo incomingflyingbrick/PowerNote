@@ -35,6 +35,7 @@ class PaintView:View {
     private var mBackGroundColor = Color.WHITE
 
     private var strokeWidth = 0f
+    private var strokeWidthErase = 30f
     private var emboss = false
     private var blur = false
     private lateinit var mBlur: MaskFilter
@@ -94,6 +95,11 @@ class PaintView:View {
 
     fun changeColor(color: Int){
         currentColor = color
+    }
+
+    fun erase(size:Float){
+        strokeWidth = size
+        currentColor = DEFAULT_BG_COLOR
     }
 
     override fun onDraw(canvas: Canvas?) {

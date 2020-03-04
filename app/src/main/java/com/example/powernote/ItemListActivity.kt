@@ -1,7 +1,6 @@
 package com.example.powernote
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
