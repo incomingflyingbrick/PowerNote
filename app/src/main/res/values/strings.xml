@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">PowerNote</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="fine_size">Fine</string>
+    <string name="medium_size">Medium</string>
+    <string name="bold_size">Bold</string>
 </resources>
