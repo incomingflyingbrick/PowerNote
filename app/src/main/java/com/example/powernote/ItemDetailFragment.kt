@@ -45,6 +45,10 @@ class ItemDetailFragment : Fragment() {
         mPaintView.changeStrokeSize(25f)
     }
 
+    fun changeColor(color:Int){
+        mPaintView.changeColor(color)
+    }
+
     companion object {
         /**
          * The fragment argument representing the item ID that this fragment

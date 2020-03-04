@@ -92,8 +92,8 @@ class PaintView:View {
         strokeWidth = size
     }
 
-    fun changeColor(color: Color){
-
+    fun changeColor(color: Int){
+        currentColor = color
     }
 
     override fun onDraw(canvas: Canvas?) {

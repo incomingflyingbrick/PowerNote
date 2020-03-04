@@ -1,20 +1,24 @@
 package com.example.powernote
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import android.widget.TextView
-
 import com.example.powernote.dummy.DummyContent
+import com.github.clans.fab.FloatingActionButton
+
 import kotlinx.android.synthetic.main.activity_item_list.*
-import kotlinx.android.synthetic.main.item_list_content.view.*
 import kotlinx.android.synthetic.main.item_list.*
+import kotlinx.android.synthetic.main.item_list_content.view.*
+import petrov.kristiyan.colorpicker.ColorPicker
+import petrov.kristiyan.colorpicker.ColorPicker.OnChooseColorListener
 
 
 const val TAG_VIEW = "paintview"
+
 /**
  * An activity representing a list of Pings. This activity
  * has different presentations for handset and tablet-size devices. On
@@ -39,8 +43,23 @@ class ItemListActivity : AppCompatActivity() {
         toolbar.title = title
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action1", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+
+            val colorPicker = ColorPicker(this)
+            colorPicker.show()
+            colorPicker.setOnChooseColorListener(object : OnChooseColorListener {
+                override fun onChooseColor(position: Int, color: Int) { // put code
+                    val frag =
+                        supportFragmentManager.findFragmentByTag(TAG_VIEW) as ItemDetailFragment
+                    frag.changeColor(color)
+                    view as FloatingActionButton
+                    view.colorNormal = color
+                    view.colorPressed = color
+                }
+
+                override fun onCancel() { // put code
+
+                }
+            })
         }
 
         if (item_detail_container != null) {
