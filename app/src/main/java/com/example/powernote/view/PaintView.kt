@@ -21,7 +21,7 @@ class PaintView:View {
 
 
     var BRUSH_SIZE = 5f
-    val DEFAULT_COLOR: Int = Color.RED
+    val DEFAULT_COLOR: Int = Color.BLACK
     val DEFAULT_BG_COLOR: Int = Color.WHITE
 
     private val TOUCH_TOLERANCE = 4f

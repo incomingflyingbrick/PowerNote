@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.powernote.dummy.DummyContent
 import com.github.clans.fab.FloatingActionButton
-
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
 import kotlinx.android.synthetic.main.item_list_content.view.*
 import petrov.kristiyan.colorpicker.ColorPicker
-import petrov.kristiyan.colorpicker.ColorPicker.OnChooseColorListener
+
+import petrov.kristiyan.colorpicker.ColorPicker.OnFastChooseColorListener
 
 
 const val TAG_VIEW = "paintview"
@@ -44,10 +44,10 @@ class ItemListActivity : AppCompatActivity() {
 
         fab.setOnClickListener { view ->
 
+
             val colorPicker = ColorPicker(this)
-            colorPicker.show()
-            colorPicker.setOnChooseColorListener(object : OnChooseColorListener {
-                override fun onChooseColor(position: Int, color: Int) { // put code
+            colorPicker.setOnFastChooseColorListener(object : OnFastChooseColorListener {
+                override fun setOnFastChooseColorListener(position: Int, color: Int) {
                     val frag =
                         supportFragmentManager.findFragmentByTag(TAG_VIEW) as ItemDetailFragment
                     frag.changeColor(color)
@@ -56,10 +56,10 @@ class ItemListActivity : AppCompatActivity() {
                     view.colorPressed = color
                 }
 
-                override fun onCancel() { // put code
+                override fun onCancel() {
 
                 }
-            })
+            }).setColumns(5).setColors(R.array.default_colors).show()
         }
 
         if (item_detail_container != null) {
